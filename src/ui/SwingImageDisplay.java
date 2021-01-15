@@ -8,18 +8,15 @@ import javax.swing.JPanel;
 import model.Image;
 
 public class SwingImageDisplay  extends JPanel implements ImageDisplay {
-    private Image currentImage;
+    private BufferedImage currentImage;
 
 
     
-    @Override
-    public Image current() {
-        return currentImage;
-    }
+    
 
     @Override
     public void show(Image image) {
-        this.currentImage = image;
+        this.currentImage = imageOf(image);
         this.repaint();
         
     }
@@ -28,16 +25,15 @@ public class SwingImageDisplay  extends JPanel implements ImageDisplay {
     public void paint(Graphics g) {
         if (currentImage == null) return;
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
-        BufferedImage bi=imageOf(currentImage);
         
-        double [] d=getD(bi);
+        double [] d=getD(currentImage);
         int w=(int)d[0];
         int h=(int)d[1];
         
-        g.drawImage(bi, (this.getWidth()-w)/2, (this.getHeight()-h)/2,
+        g.drawImage(currentImage, (this.getWidth()-w)/2, (this.getHeight()-h)/2,
         (this.getWidth()-w)/2+w, (this.getHeight()-h)/2+h,
         0, 0,
-        bi.getWidth(),bi.getHeight(), null);
+        currentImage.getWidth(),currentImage.getHeight(), null);
     }
 
     private BufferedImage imageOf(Image image) {

@@ -1,8 +1,9 @@
 package ui;
 
+import java.awt.Point;
 import model.Image;
 
 public interface ImageDisplay {
-    Image current();
     void show(Image image);
+
 }
