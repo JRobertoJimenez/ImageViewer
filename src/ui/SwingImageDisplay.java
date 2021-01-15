@@ -1,8 +1,6 @@
 package ui;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
