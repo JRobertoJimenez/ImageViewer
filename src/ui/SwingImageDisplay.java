@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -9,14 +10,21 @@ import model.Image;
 
 public class SwingImageDisplay  extends JPanel implements ImageDisplay {
     private BufferedImage currentImage;
-
+    private Point shift;
 
     
     
-
     @Override
     public void show(Image image) {
         this.currentImage = imageOf(image);
+        shift=new Point(0,0);
+        this.repaint();
+    }
+    
+    @Override
+    public void show(Image image, Point s) {
+        this.currentImage = imageOf(image);
+        shift = s;
         this.repaint();
         
     }
@@ -30,8 +38,8 @@ public class SwingImageDisplay  extends JPanel implements ImageDisplay {
         int w=(int)d[0];
         int h=(int)d[1];
         
-        g.drawImage(currentImage, (this.getWidth()-w)/2, (this.getHeight()-h)/2,
-        (this.getWidth()-w)/2+w, (this.getHeight()-h)/2+h,
+        g.drawImage(currentImage, shift.x+(this.getWidth()-w)/2, (this.getHeight()-h)/2,
+        shift.x+(this.getWidth()-w)/2+w, (this.getHeight()-h)/2+h,
         0, 0,
         currentImage.getWidth(),currentImage.getHeight(), null);
     }
@@ -59,6 +67,8 @@ public class SwingImageDisplay  extends JPanel implements ImageDisplay {
         
         return res;
     }
+
+    
 
     
 

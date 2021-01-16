@@ -1,15 +1,12 @@
 package controller;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -22,6 +19,7 @@ public class MainFrame extends JFrame {
 
     private ImageDisplay imageDisplay;
     private Image i;
+    private int x;
 
     public MainFrame() {
         this.setTitle("Image Viewer");
@@ -37,7 +35,7 @@ public class MainFrame extends JFrame {
         SwingImageDisplay sid = new SwingImageDisplay();
         this.imageDisplay = sid;
         sid.addMouseListener(moueseListener());
-        //sid.addMouseMotionListener(mouseMotion());
+        sid.addMouseMotionListener(mouseMotion());
         return sid;
     }
     
@@ -48,7 +46,6 @@ public class MainFrame extends JFrame {
 
     private MouseListener moueseListener() {
         return new MouseListener() {
-            private int x;
             @Override
             public void mouseClicked(MouseEvent e) {
                 
@@ -83,10 +80,11 @@ public class MainFrame extends JFrame {
         };
     }
 
-    /*private MouseMotionListener mouseMotion() {
+    private MouseMotionListener mouseMotion() {
         return new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
+                imageDisplay.show(i,new Point(e.getX()-x,0));
             }
 
             @Override
@@ -94,50 +92,14 @@ public class MainFrame extends JFrame {
                 
             }
         };
-    }*/
+    }
+    
     
     public static void main(String[] args) {
         new MainFrame().setImage(
                 new FileImageLoader(
                         new File("C:/Users/José Roberto Jiménez/Desktop/Nueva carpeta/")).load());
     }
+   
 
 }
-
-
-/*private JPanel toolbar() {
-        JPanel panel = new JPanel();
-        panel.add(prevButton());
-        panel.add(nextButton());
-        return panel;
-    }
-
-    private Component prevButton() {
-        JButton button = new JButton("<");
-        button.addActionListener(prevImage());
-        return button;
-    }
-
-    private ActionListener prevImage() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                imageDisplay.show(imageDisplay.current().prev());
-            }
-        };
-    }
-
-    private Component nextButton() {
-        JButton button = new JButton(">");
-        button.addActionListener(nextImage());
-        return button;
-    }
-
-    private ActionListener nextImage() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                imageDisplay.show(imageDisplay.current().next());
-            }
-        };
-    }*/
