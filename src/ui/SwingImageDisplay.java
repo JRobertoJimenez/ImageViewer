@@ -10,6 +10,7 @@ import model.Image;
 
 public class SwingImageDisplay  extends JPanel implements ImageDisplay {
     private BufferedImage currentImage;
+    private BufferedImage altImage;
     private Point shift;
 
     
@@ -18,13 +19,15 @@ public class SwingImageDisplay  extends JPanel implements ImageDisplay {
     public void show(Image image) {
         this.currentImage = imageOf(image);
         shift=new Point(0,0);
+        altImage=null;
         this.repaint();
     }
     
     @Override
-    public void show(Image image, Point s) {
+    public void show(Image image, Point s, Image alt) {
         this.currentImage = imageOf(image);
         shift = s;
+        altImage=imageOf(alt);
         this.repaint();
         
     }
@@ -39,9 +42,21 @@ public class SwingImageDisplay  extends JPanel implements ImageDisplay {
         int h=(int)d[1];
         
         g.drawImage(currentImage, shift.x+(this.getWidth()-w)/2, (this.getHeight()-h)/2,
-        shift.x+(this.getWidth()-w)/2+w, (this.getHeight()-h)/2+h,
-        0, 0,
-        currentImage.getWidth(),currentImage.getHeight(), null);
+            shift.x+(this.getWidth()+w)/2, (this.getHeight()+h)/2,
+            0, 0,
+            currentImage.getWidth(),currentImage.getHeight(), null);
+        
+        
+        if (altImage == null) return;
+        d=getD(altImage);
+        int altw=(int)d[0];
+        int alth=(int)d[1];
+        
+        g.drawImage(altImage, 
+            shift.x + (shift.x>0? -altw:this.getWidth()), (this.getHeight()-alth)/2,
+            shift.x + (shift.x>0? 0:this.getWidth()+altw), (this.getHeight()+alth)/2,
+            0, 0,
+            altImage.getWidth(),altImage.getHeight(), null);
     }
 
     private BufferedImage imageOf(Image image) {

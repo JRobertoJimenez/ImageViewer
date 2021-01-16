@@ -6,6 +6,6 @@ import model.Image;
 public interface ImageDisplay {
     
     void show(Image image);
-    void show(Image image, Point shift);
+    void show(Image image, Point shift, Image alt);
 
 }

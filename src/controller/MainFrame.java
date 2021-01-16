@@ -84,7 +84,11 @@ public class MainFrame extends JFrame {
         return new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                imageDisplay.show(i,new Point(e.getX()-x,0));
+                if(x>e.getX()){
+                    imageDisplay.show(i,new Point(e.getX()-x,0), i.next());
+                }else if(x<e.getX()){
+                    imageDisplay.show(i,new Point(e.getX()-x,0), i.prev());
+                }
             }
 
             @Override
